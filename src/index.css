@@ -5,9 +5,18 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background: #eaeaea;
+  color: #303030;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+/* checkbox */
+.checkbox {
+  position: relative;
+  top: 2px;
+  margin: 10px 5px 10px 0;
 }

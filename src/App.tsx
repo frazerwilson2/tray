@@ -1,24 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
+import { useSelector } from 'react-redux'
+import {getActiveTab} from './store';
+import {User, Privacy, Done} from './constants';
 import './App.css';
+import Menu from './components/menu';
+import UserPage from './pages/UserPage';
+import PrivacyPage from './pages/PrivacyPage';
+import DonePage from './pages/DonePage';
 
 function App() {
+  const activeTab = useSelector(getActiveTab);
+
+  // Define pages and components
+  const pagesConfig = [
+    {
+      title: User,
+      component: () => <UserPage nextStep={Privacy} />
+    },
+    {
+      title: Privacy,
+      component: () => <PrivacyPage nextStep={Done} />
+    },
+    {
+      title: Done,
+      component: () => <DonePage lastPage />
+    }
+  ];
+
+  // determine which tab to show
+  const SelectedActiveTab = Object.values(pagesConfig).find(page => page.title == activeTab);
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <Menu config={pagesConfig} active={SelectedActiveTab?.title} />
+      {SelectedActiveTab && <SelectedActiveTab.component />}
     </div>
   );
 }
